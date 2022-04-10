@@ -66,6 +66,16 @@ func (r *{{.CamelName}}Repository) FindPageByCnd(db *gorm.DB, cnd *sqls.Cnd) (li
 	return
 }
 
+func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (list []model.{{.Name}}) {
+	db.Raw(sqlStr, paramArr...).Scan(&list)
+	return
+}
+
+func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (count int64) {
+	db.Raw(sqlStr, paramArr...).Count(&count)
+	return
+}
+
 func (r *{{.CamelName}}Repository) Count(db *gorm.DB, cnd *sqls.Cnd) int64 {
 	return cnd.Count(db, &model.{{.Name}}{})
 }
