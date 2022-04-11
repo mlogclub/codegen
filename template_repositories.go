@@ -71,7 +71,7 @@ func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramAr
 	return
 }
 
-func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (count int64) {
+func (r *{{.CamelName}}Repository) CountBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (count int64) {
 	db.Raw(sqlStr, paramArr...).Count(&count)
 	return
 }
