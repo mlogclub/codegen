@@ -33,13 +33,11 @@ func (c *{{.Name}}Controller) AnyList() *web.JsonResult {
 
 func (c *{{.Name}}Controller) PostCreate() *web.JsonResult {
 	t := &model.{{.Name}}{}
-	err := params.ReadForm(c.Ctx, t)
-	if err != nil {
+	if err := params.ReadForm(c.Ctx, t); err != nil {
 		return web.JsonErrorMsg(err.Error())
 	}
 
-	err = services.{{.Name}}Service.Create(t)
-	if err != nil {
+	if err := services.{{.Name}}Service.Create(t); err != nil {
 		return web.JsonErrorMsg(err.Error())
 	}
 	return web.JsonData(t)
@@ -55,16 +53,25 @@ func (c *{{.Name}}Controller) PostUpdate() *web.JsonResult {
 		return web.JsonErrorMsg("entity not found")
 	}
 
-	err = params.ReadForm(c.Ctx, t)
-	if err != nil {
+	if err := params.ReadForm(c.Ctx, t); err != nil {
 		return web.JsonErrorMsg(err.Error())
 	}
 
-	err = services.{{.Name}}Service.Update(t)
-	if err != nil {
+	if err := services.{{.Name}}Service.Update(t); err != nil {
 		return web.JsonErrorMsg(err.Error())
 	}
 	return web.JsonData(t)
+}
+
+func (c *{{.Name}}Controller) PostDelete() *web.JsonResult {
+	ids := params.GetInt64Arr(c.Ctx, "ids")
+	if len(ids) == 0 {
+		return web.JsonErrorMsg("delete ids is empty")
+	}
+	for _, id := range ids {
+		services.{{.Name}}Service.Delete(id)
+	}
+	return web.JsonSuccess()
 }
 
 `))
