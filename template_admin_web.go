@@ -87,7 +87,7 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
     },
     methods: {
       async list() {
-		this.loading = true;
+		    this.loading = true;
         const params = Object.assign(this.filters, {
           page: this.page.page,
           limit: this.page.limit,
@@ -138,7 +138,7 @@ var viewEditTmpl = template.Must(template.New("edit.vue").Parse(`
   >
     <el-form ref="formRef" :model="form" label-width="80px">
       {{range .Fields}}
-      <el-form-item label="{{.CamelName}}">
+      <el-form-item label="{{.CamelName}}" prop="{{.CamelName}}">
         <el-input v-model="form.{{.CamelName}}"></el-input>
       </el-form-item>
       {{end}}
