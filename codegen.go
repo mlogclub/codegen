@@ -44,7 +44,10 @@ func Generate(baseDir, pkgName string, models ...GenerateStruct) {
 		if err := generateController(baseDir, pkgName, model); err != nil {
 			logrus.Error(err)
 		}
-		if err := generateWeb(baseDir, pkgName, model); err != nil {
+		if err := generateWebIndex(baseDir, pkgName, model); err != nil {
+			logrus.Error(err)
+		}
+		if err := generateWebEdit(baseDir, pkgName, model); err != nil {
 			logrus.Error(err)
 		}
 	}
@@ -134,7 +137,7 @@ func generateController(baseDir, pkgName string, s GenerateStruct) error {
 	return writeFile(p, c)
 }
 
-func generateWeb(baseDir, pkgName string, s GenerateStruct) error {
+func generateWebIndex(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
 	err := viewIndexTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
@@ -148,6 +151,28 @@ func generateWeb(baseDir, pkgName string, s GenerateStruct) error {
 	c := b.String()
 
 	sub := path.Join("/web/admin/src/views/", strcase.ToKebab(s.Name), "index.vue")
+
+	p, err := getFilePath(baseDir, sub)
+	if err != nil {
+		return err
+	}
+	return writeFile(p, c)
+}
+
+func generateWebEdit(baseDir, pkgName string, s GenerateStruct) error {
+	var b bytes.Buffer
+	err := viewEditTmpl.Execute(&b, &InputData{
+		PkgName:   pkgName,
+		Name:      s.Name,
+		KebabName: strcase.ToKebab(s.Name),
+		Fields:    s.Fields,
+	})
+	if err != nil {
+		return err
+	}
+	c := b.String()
+
+	sub := path.Join("/web/admin/src/views/", strcase.ToKebab(s.Name), "components", "Edit.vue")
 
 	p, err := getFilePath(baseDir, sub)
 	if err != nil {
