@@ -15,7 +15,7 @@ import (
 var {{.Name}}Service = new{{.Name}}Service()
 
 func new{{.Name}}Service() *{{.CamelName}}Service {
-	return &{{.CamelName}}Service {}
+	return &{{.CamelName}}Service{}
 }
 
 type {{.CamelName}}Service struct {
