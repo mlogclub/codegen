@@ -12,7 +12,7 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
           <el-input v-model="filters.name" placeholder="名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="list">查询</el-button>
+          <el-button type="primary" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleEdit($event)">新增</el-button>
@@ -20,7 +20,7 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
       </el-form>
     </div>
 
-      <!--列表-->
+    <!--列表-->
     <div ref="mainContent" :style="{ height: mainHeight }">
       <el-table
         v-loading="loading"
