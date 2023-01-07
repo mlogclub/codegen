@@ -136,7 +136,7 @@ var viewEditTmpl = template.Must(template.New("edit.vue").Parse(`
     :title="title"
     @close="close"
   >
-    <el-form ref="formRef" :model="form" label-width="80px">
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
       {{range .Fields}}
       <el-form-item label="{{.CamelName}}" prop="{{.CamelName}}">
         <el-input v-model="form.{{.CamelName}}"></el-input>
