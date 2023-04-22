@@ -37,8 +37,9 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
         <el-table-column prop="{{.CamelName}}" label="{{.CamelName}}"></el-table-column>
         {{end}}
         <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <template #default="{ row }">
+            <el-button size="mini" type="primary" @click="handleEdit(row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
         <template #empty>
@@ -119,6 +120,24 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
         } else {
           this.$refs.editRef.showEdit();
         }
+      },
+      handleDelete(row) {
+        const me = this;
+        me.$confirm("是否确认删除?")
+          .then(() => {
+            me.axios
+              .form("/api/admin/role/delete", {
+                ids: row.id,
+              })
+              .then(() => {
+                this.$notify.success("删除成功");
+                me.list();
+              })
+              .catch((e) => {
+                this.$notify.error(e.message || e);
+              });
+          })
+          .catch((e) => {});
       },
     }
   }
