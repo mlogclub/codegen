@@ -126,7 +126,7 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
         me.$confirm("是否确认删除?")
           .then(() => {
             me.axios
-              .form("/api/admin/role/delete", {
+              .form("/api/admin/{{.KebabName}}/delete", {
                 ids: row.id,
               })
               .then(() => {
