@@ -27,7 +27,11 @@ func (c *{{.Name}}Controller) GetBy(id int64) *web.JsonResult {
 }
 
 func (c *{{.Name}}Controller) AnyList() *web.JsonResult {
-	list, paging := services.{{.Name}}Service.FindPageByParams(params.NewQueryParams(c.Ctx).PageByReq().Desc("id"))
+	list, paging := services.{{.Name}}Service.FindPageByCnd(params.NewPagedSqlCnd(c.Ctx,
+		params.QueryFilter{
+			ParamName: "id",
+		},
+	).Desc("id"))
 	return web.JsonData(&web.PageResult{Results: list, Page: paging})
 }
 
