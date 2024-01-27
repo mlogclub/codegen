@@ -8,6 +8,7 @@ import (
 	"path"
 	"reflect"
 
+	"github.com/mlogclub/codegen/templates"
 	"github.com/mlogclub/simple/common/files"
 	"github.com/mlogclub/simple/common/strs/strcase"
 	"github.com/mlogclub/simple/common/structs"
@@ -76,7 +77,7 @@ func GetGenerateStruct(s interface{}) GenerateStruct {
 
 func generateRepository(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := repositoryTmpl.Execute(&b, &InputData{
+	err := templates.RepositoryTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -97,7 +98,7 @@ func generateRepository(baseDir, pkgName string, s GenerateStruct) error {
 
 func generateService(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := serviceTmpl.Execute(&b, &InputData{
+	err := templates.ServiceTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -118,7 +119,7 @@ func generateService(baseDir, pkgName string, s GenerateStruct) error {
 
 func generateController(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := controllerTmpl.Execute(&b, &InputData{
+	err := templates.ControllerTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -139,7 +140,7 @@ func generateController(baseDir, pkgName string, s GenerateStruct) error {
 
 func generateWebIndex(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := viewIndexTmpl.Execute(&b, &InputData{
+	err := templates.ViewIndexTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		KebabName: strcase.ToKebab(s.Name),
@@ -161,7 +162,7 @@ func generateWebIndex(baseDir, pkgName string, s GenerateStruct) error {
 
 func generateWebEdit(baseDir, pkgName string, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := viewEditTmpl.Execute(&b, &InputData{
+	err := templates.ViewEditTmpl.Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		KebabName: strcase.ToKebab(s.Name),

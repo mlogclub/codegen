@@ -1,8 +1,8 @@
-package codegen
+package templates
 
 import "html/template"
 
-var controllerTmpl = template.Must(template.New("controller").Parse(`package admin
+var ControllerTmpl = template.Must(template.New("controller").Parse(`package admin
 
 import (
 	"{{.PkgName}}/model"

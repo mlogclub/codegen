@@ -1,8 +1,8 @@
-package codegen
+package templates
 
 import "html/template"
 
-var serviceTmpl = template.Must(template.New("service").Parse(`package services
+var ServiceTmpl = template.Must(template.New("service").Parse(`package services
 
 import (
 	"{{.PkgName}}/model"

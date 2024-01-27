@@ -1,8 +1,8 @@
-package codegen
+package templates
 
 import "html/template"
 
-var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
+var ViewIndexTmpl = template.Must(template.New("index.vue").Parse(`
 <template>
   <section class="page-container">
     <!--工具条-->
@@ -147,7 +147,7 @@ var viewIndexTmpl = template.Must(template.New("index.vue").Parse(`
 
 `))
 
-var viewEditTmpl = template.Must(template.New("edit.vue").Parse(`
+var ViewEditTmpl = template.Must(template.New("edit.vue").Parse(`
 <template>
   <el-dialog
     :visible.sync="dialogFormVisible"

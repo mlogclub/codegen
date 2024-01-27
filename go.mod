@@ -1,13 +1,10 @@
 module github.com/mlogclub/codegen
 
-go 1.18
+go 1.21.6
 
 require (
-	github.com/mlogclub/simple v1.2.0
-	github.com/sirupsen/logrus v1.8.1
+	github.com/mlogclub/simple v1.2.23
+	github.com/sirupsen/logrus v1.9.3
 )
 
-require (
-	github.com/stretchr/testify v1.7.0 // indirect
-	golang.org/x/sys v0.0.0-20220408201424-a24fb2fb8a0f // indirect
-)
+require golang.org/x/sys v0.16.0 // indirect
