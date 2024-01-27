@@ -72,7 +72,7 @@ var AdminIndexTemplate = template.Must(template.New("index.vue").Parse(`
     limit: 20,
     page: 1,
 
-    id: null,
+    id: undefined,
   });
 
   const data = reactive({
@@ -166,7 +166,7 @@ var AdminEditTemplate = template.Must(template.New("edit.vue").Parse(`
 
   const form = ref({
     {{range .Fields}}
-    {{.CamelName}}: null,
+    {{.CamelName}}: undefined,
     {{end}}
   });
   const rules = {
