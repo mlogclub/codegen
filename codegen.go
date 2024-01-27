@@ -151,7 +151,7 @@ func generateWebIndex(baseDir, pkgName string, version int, s GenerateStruct) er
 	}
 	c := b.String()
 
-	sub := path.Join("/web/admin/src/views/", strcase.ToKebab(s.Name), "index.vue")
+	sub := path.Join("/web/admin/", strcase.ToKebab(s.Name), "index.vue")
 
 	p, err := getFilePath(baseDir, sub)
 	if err != nil {
@@ -173,7 +173,7 @@ func generateWebEdit(baseDir, pkgName string, version int, s GenerateStruct) err
 	}
 	c := b.String()
 
-	sub := path.Join("/web/admin/src/views/", strcase.ToKebab(s.Name), "components", "Edit.vue")
+	sub := path.Join("/web/admin/", strcase.ToKebab(s.Name), "components", "Edit.vue")
 
 	p, err := getFilePath(baseDir, sub)
 	if err != nil {
