@@ -1,8 +1,8 @@
-package templates
+package v1
 
 import "html/template"
 
-var ViewIndexTmpl = template.Must(template.New("index.vue").Parse(`
+var AdminIndexTemplate = template.Must(template.New("index.vue").Parse(`
 <template>
   <section class="page-container">
     <!--工具条-->
@@ -147,7 +147,7 @@ var ViewIndexTmpl = template.Must(template.New("index.vue").Parse(`
 
 `))
 
-var ViewEditTmpl = template.Must(template.New("edit.vue").Parse(`
+var AdminEditTemplate = template.Must(template.New("edit.vue").Parse(`
 <template>
   <el-dialog
     :visible.sync="dialogFormVisible"

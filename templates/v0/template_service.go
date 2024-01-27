@@ -1,8 +1,8 @@
-package templates
+package v0
 
 import "html/template"
 
-var ServiceTmpl = template.Must(template.New("service").Parse(`package services
+var ServiceTemplate = template.Must(template.New("service").Parse(`package services
 
 import (
 	"{{.PkgName}}/model"

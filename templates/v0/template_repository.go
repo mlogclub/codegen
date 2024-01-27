@@ -1,8 +1,8 @@
-package templates
+package v0
 
 import "html/template"
 
-var RepositoryTmpl = template.Must(template.New("repository").Parse(`package repositories
+var RepositoryTemplate = template.Must(template.New("repository").Parse(`package repositories
 
 import (
 	"{{.PkgName}}/model"

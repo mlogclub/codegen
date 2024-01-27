@@ -34,21 +34,21 @@ type InputData struct {
 	Fields    []GenerateField
 }
 
-func Generate(baseDir, pkgName string, models ...GenerateStruct) {
+func Generate(baseDir, pkgName string, version int, models ...GenerateStruct) {
 	for _, model := range models {
-		if err := generateRepository(baseDir, pkgName, model); err != nil {
+		if err := generateRepository(baseDir, pkgName, version, model); err != nil {
 			logrus.Error(err)
 		}
-		if err := generateService(baseDir, pkgName, model); err != nil {
+		if err := generateService(baseDir, pkgName, version, model); err != nil {
 			logrus.Error(err)
 		}
-		if err := generateController(baseDir, pkgName, model); err != nil {
+		if err := generateController(baseDir, pkgName, version, model); err != nil {
 			logrus.Error(err)
 		}
-		if err := generateWebIndex(baseDir, pkgName, model); err != nil {
+		if err := generateWebIndex(baseDir, pkgName, version, model); err != nil {
 			logrus.Error(err)
 		}
-		if err := generateWebEdit(baseDir, pkgName, model); err != nil {
+		if err := generateWebEdit(baseDir, pkgName, version, model); err != nil {
 			logrus.Error(err)
 		}
 	}
@@ -75,9 +75,9 @@ func GetGenerateStruct(s interface{}) GenerateStruct {
 	}
 }
 
-func generateRepository(baseDir, pkgName string, s GenerateStruct) error {
+func generateRepository(baseDir, pkgName string, version int, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := templates.RepositoryTmpl.Execute(&b, &InputData{
+	err := templates.GetRepositoryTemplate(version).Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -96,9 +96,9 @@ func generateRepository(baseDir, pkgName string, s GenerateStruct) error {
 	return writeFile(p, c)
 }
 
-func generateService(baseDir, pkgName string, s GenerateStruct) error {
+func generateService(baseDir, pkgName string, version int, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := templates.ServiceTmpl.Execute(&b, &InputData{
+	err := templates.GetServiceTemplate(version).Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -117,9 +117,9 @@ func generateService(baseDir, pkgName string, s GenerateStruct) error {
 	return writeFile(p, c)
 }
 
-func generateController(baseDir, pkgName string, s GenerateStruct) error {
+func generateController(baseDir, pkgName string, version int, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := templates.ControllerTmpl.Execute(&b, &InputData{
+	err := templates.GetControllerTemplate(version).Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		CamelName: strcase.ToLowerCamel(s.Name),
@@ -138,9 +138,9 @@ func generateController(baseDir, pkgName string, s GenerateStruct) error {
 	return writeFile(p, c)
 }
 
-func generateWebIndex(baseDir, pkgName string, s GenerateStruct) error {
+func generateWebIndex(baseDir, pkgName string, version int, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := templates.ViewIndexTmpl.Execute(&b, &InputData{
+	err := templates.GetAdminIndexTemplate(version).Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		KebabName: strcase.ToKebab(s.Name),
@@ -160,9 +160,9 @@ func generateWebIndex(baseDir, pkgName string, s GenerateStruct) error {
 	return writeFile(p, c)
 }
 
-func generateWebEdit(baseDir, pkgName string, s GenerateStruct) error {
+func generateWebEdit(baseDir, pkgName string, version int, s GenerateStruct) error {
 	var b bytes.Buffer
-	err := templates.ViewEditTmpl.Execute(&b, &InputData{
+	err := templates.GetAdminEditTemplate(version).Execute(&b, &InputData{
 		PkgName:   pkgName,
 		Name:      s.Name,
 		KebabName: strcase.ToKebab(s.Name),
