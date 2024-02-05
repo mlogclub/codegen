@@ -35,6 +35,8 @@ var AdminIndexTemplate = template.Must(template.New("index.vue").Parse(`
         :size="appStore.table.size"
         :bordered="appStore.table.bordered"
         :pagination="pagination"
+        :sticky-header="true"
+        style="height: 100%"
         column-resizable
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
@@ -94,6 +96,10 @@ var AdminIndexTemplate = template.Must(template.New("index.vue").Parse(`
       showPageSize: true,
       pageSizeOptions: [20, 50, 100, 200, 300, 500],
     };
+  });
+
+  onMounted(() => {
+    useTableHeight();
   });
 
   const list = async () => {
