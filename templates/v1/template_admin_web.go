@@ -38,6 +38,7 @@ var AdminIndexTemplate = template.Must(template.New("index.vue").Parse(`
         :sticky-header="true"
         style="height: 100%"
         column-resizable
+        row-key="id"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
