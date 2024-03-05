@@ -89,7 +89,11 @@ func generateRepository(baseDir, pkgName string, version int, s GenerateStruct) 
 	}
 	c := b.String()
 
-	p, err := getFilePath(baseDir, "/repositories/"+strcase.ToSnake(s.Name+"_repository.go"))
+	filename := "/repositories/" + strcase.ToSnake(s.Name+"_repository.go")
+	if version > 0 {
+		filename = "/internal/repositories/" + strcase.ToSnake(s.Name+"_repository.go")
+	}
+	p, err := getFilePath(baseDir, filename)
 	if err != nil {
 		return err
 	}
@@ -110,7 +114,12 @@ func generateService(baseDir, pkgName string, version int, s GenerateStruct) err
 	}
 	c := b.String()
 
-	p, err := getFilePath(baseDir, "/services/"+strcase.ToSnake(s.Name+"_service.go"))
+	filename := "/services/" + strcase.ToSnake(s.Name+"_service.go")
+	if version > 0 {
+		filename = "/internal/services/" + strcase.ToSnake(s.Name+"_service.go")
+	}
+
+	p, err := getFilePath(baseDir, filename)
 	if err != nil {
 		return err
 	}
@@ -131,7 +140,11 @@ func generateController(baseDir, pkgName string, version int, s GenerateStruct) 
 	}
 	c := b.String()
 
-	p, err := getFilePath(baseDir, "/controllers/admin/"+strcase.ToSnake(s.Name+"_controller.go"))
+	filename := "/controllers/admin/" + strcase.ToSnake(s.Name+"_controller.go")
+	if version > 0 {
+		filename = "/internal/controllers/admin/" + strcase.ToSnake(s.Name+"_controller.go")
+	}
+	p, err := getFilePath(baseDir, filename)
 	if err != nil {
 		return err
 	}

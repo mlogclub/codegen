@@ -5,7 +5,7 @@ import "html/template"
 var RepositoryTemplate = template.Must(template.New("repository").Parse(`package repositories
 
 import (
-	"{{.PkgName}}/model"
+	"{{.PkgName}}/internal/models"
 
 	"github.com/mlogclub/simple/sqls"
 	"github.com/mlogclub/simple/web/params"
@@ -21,42 +21,42 @@ func new{{.Name}}Repository() *{{.CamelName}}Repository {
 type {{.CamelName}}Repository struct {
 }
 
-func (r *{{.CamelName}}Repository) Get(db *gorm.DB, id int64) *model.{{.Name}} {
-	ret := &model.{{.Name}}{}
+func (r *{{.CamelName}}Repository) Get(db *gorm.DB, id int64) *models.{{.Name}} {
+	ret := &models.{{.Name}}{}
 	if err := db.First(ret, "id = ?", id).Error; err != nil {
 		return nil
 	}
 	return ret
 }
 
-func (r *{{.CamelName}}Repository) Take(db *gorm.DB, where ...interface{}) *model.{{.Name}} {
-	ret := &model.{{.Name}}{}
+func (r *{{.CamelName}}Repository) Take(db *gorm.DB, where ...interface{}) *models.{{.Name}} {
+	ret := &models.{{.Name}}{}
 	if err := db.Take(ret, where...).Error; err != nil {
 		return nil
 	}
 	return ret
 }
 
-func (r *{{.CamelName}}Repository) Find(db *gorm.DB, cnd *sqls.Cnd) (list []model.{{.Name}}) {
+func (r *{{.CamelName}}Repository) Find(db *gorm.DB, cnd *sqls.Cnd) (list []models.{{.Name}}) {
 	cnd.Find(db, &list)
 	return
 }
 
-func (r *{{.CamelName}}Repository) FindOne(db *gorm.DB, cnd *sqls.Cnd) *model.{{.Name}} {
-	ret := &model.{{.Name}}{}
+func (r *{{.CamelName}}Repository) FindOne(db *gorm.DB, cnd *sqls.Cnd) *models.{{.Name}} {
+	ret := &models.{{.Name}}{}
 	if err := cnd.FindOne(db, &ret); err != nil {
 		return nil
 	}
 	return ret
 }
 
-func (r *{{.CamelName}}Repository) FindPageByParams(db *gorm.DB, params *params.QueryParams) (list []model.{{.Name}}, paging *sqls.Paging) {
+func (r *{{.CamelName}}Repository) FindPageByParams(db *gorm.DB, params *params.QueryParams) (list []models.{{.Name}}, paging *sqls.Paging) {
 	return r.FindPageByCnd(db, &params.Cnd)
 }
 
-func (r *{{.CamelName}}Repository) FindPageByCnd(db *gorm.DB, cnd *sqls.Cnd) (list []model.{{.Name}}, paging *sqls.Paging) {
+func (r *{{.CamelName}}Repository) FindPageByCnd(db *gorm.DB, cnd *sqls.Cnd) (list []models.{{.Name}}, paging *sqls.Paging) {
 	cnd.Find(db, &list)
-	count := cnd.Count(db, &model.{{.Name}}{})
+	count := cnd.Count(db, &models.{{.Name}}{})
 
 	paging = &sqls.Paging{
 		Page:  cnd.Paging.Page,
@@ -66,7 +66,7 @@ func (r *{{.CamelName}}Repository) FindPageByCnd(db *gorm.DB, cnd *sqls.Cnd) (li
 	return
 }
 
-func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (list []model.{{.Name}}) {
+func (r *{{.CamelName}}Repository) FindBySql(db *gorm.DB, sqlStr string, paramArr... interface{}) (list []models.{{.Name}}) {
 	db.Raw(sqlStr, paramArr...).Scan(&list)
 	return
 }
@@ -77,31 +77,31 @@ func (r *{{.CamelName}}Repository) CountBySql(db *gorm.DB, sqlStr string, paramA
 }
 
 func (r *{{.CamelName}}Repository) Count(db *gorm.DB, cnd *sqls.Cnd) int64 {
-	return cnd.Count(db, &model.{{.Name}}{})
+	return cnd.Count(db, &models.{{.Name}}{})
 }
 
-func (r *{{.CamelName}}Repository) Create(db *gorm.DB, t *model.{{.Name}}) (err error) {
+func (r *{{.CamelName}}Repository) Create(db *gorm.DB, t *models.{{.Name}}) (err error) {
 	err = db.Create(t).Error
 	return
 }
 
-func (r *{{.CamelName}}Repository) Update(db *gorm.DB, t *model.{{.Name}}) (err error) {
+func (r *{{.CamelName}}Repository) Update(db *gorm.DB, t *models.{{.Name}}) (err error) {
 	err = db.Save(t).Error
 	return
 }
 
 func (r *{{.CamelName}}Repository) Updates(db *gorm.DB, id int64, columns map[string]interface{}) (err error) {
-	err = db.Model(&model.{{.Name}}{}).Where("id = ?", id).Updates(columns).Error
+	err = db.Model(&models.{{.Name}}{}).Where("id = ?", id).Updates(columns).Error
 	return
 }
 
 func (r *{{.CamelName}}Repository) UpdateColumn(db *gorm.DB, id int64, name string, value interface{}) (err error) {
-	err = db.Model(&model.{{.Name}}{}).Where("id = ?", id).UpdateColumn(name, value).Error
+	err = db.Model(&models.{{.Name}}{}).Where("id = ?", id).UpdateColumn(name, value).Error
 	return
 }
 
 func (r *{{.CamelName}}Repository) Delete(db *gorm.DB, id int64) {
-	db.Delete(&model.{{.Name}}{}, "id = ?", id)
+	db.Delete(&models.{{.Name}}{}, "id = ?", id)
 }
 
 `))

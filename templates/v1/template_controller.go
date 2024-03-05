@@ -5,8 +5,8 @@ import "html/template"
 var ControllerTemplate = template.Must(template.New("controller").Parse(`package admin
 
 import (
-	"{{.PkgName}}/model"
-	"{{.PkgName}}/services"
+	"{{.PkgName}}/internal/models"
+	"{{.PkgName}}/internal/services"
 	"strconv"
 
 	"github.com/kataras/iris/v12"
@@ -36,7 +36,7 @@ func (c *{{.Name}}Controller) AnyList() *web.JsonResult {
 }
 
 func (c *{{.Name}}Controller) PostCreate() *web.JsonResult {
-	t := &model.{{.Name}}{}
+	t := &models.{{.Name}}{}
 	if err := params.ReadForm(c.Ctx, t); err != nil {
 		return web.JsonErrorMsg(err.Error())
 	}
