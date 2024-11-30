@@ -48,10 +48,7 @@ func (c *{{.Name}}Controller) PostCreate() *web.JsonResult {
 }
 
 func (c *{{.Name}}Controller) PostUpdate() *web.JsonResult {
-	id, err := params.FormValueInt64(c.Ctx, "id")
-	if err != nil {
-		return web.JsonErrorMsg(err.Error())
-	}
+	id, _ := params.GetInt64(c.Ctx, "id")
 	t := services.{{.Name}}Service.Get(id)
 	if t == nil {
 		return web.JsonErrorMsg("entity not found")
