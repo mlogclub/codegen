@@ -182,6 +182,7 @@ var AdminEditTemplate = template.Must(template.New("edit.vue").Parse(`
 
   const show = () => {
     formRef.value.resetFields();
+    form.value = {} as any;
 
     config.isCreate = true;
     config.title = '新增';
