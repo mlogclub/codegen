@@ -12,8 +12,6 @@ import (
 	"github.com/mlogclub/simple/common/files"
 	"github.com/mlogclub/simple/common/strs/strcase"
 	"github.com/mlogclub/simple/common/structs"
-
-	"github.com/sirupsen/logrus"
 )
 
 type GenerateStruct struct {
@@ -37,19 +35,19 @@ type InputData struct {
 func Generate(baseDir, pkgName string, version int, models ...GenerateStruct) {
 	for _, model := range models {
 		if err := generateRepository(baseDir, pkgName, version, model); err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 		if err := generateService(baseDir, pkgName, version, model); err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 		if err := generateController(baseDir, pkgName, version, model); err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 		if err := generateWebIndex(baseDir, pkgName, version, model); err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 		if err := generateWebEdit(baseDir, pkgName, version, model); err != nil {
-			logrus.Error(err)
+			fmt.Println(err)
 		}
 	}
 }
