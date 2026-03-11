@@ -32,24 +32,61 @@ type InputData struct {
 	Fields    []GenerateField
 }
 
-func Generate(baseDir, pkgName string, version int, models ...GenerateStruct) {
+// Options for generating code
+type Options struct {
+	BaseDir string
+	PkgName string
+	Version int
+
+	Repository bool
+	Service    bool
+	Controller bool
+	WebIndex   bool
+	WebEdit    bool
+}
+
+// GenerateWithOption generate code with options
+func GenerateWithOption(option Options, models ...GenerateStruct) {
 	for _, model := range models {
-		if err := generateRepository(baseDir, pkgName, version, model); err != nil {
-			fmt.Println(err)
+		if option.Repository {
+			if err := generateRepository(option.BaseDir, option.PkgName, option.Version, model); err != nil {
+				fmt.Println(err)
+			}
 		}
-		if err := generateService(baseDir, pkgName, version, model); err != nil {
-			fmt.Println(err)
+		if option.Service {
+			if err := generateService(option.BaseDir, option.PkgName, option.Version, model); err != nil {
+				fmt.Println(err)
+			}
 		}
-		if err := generateController(baseDir, pkgName, version, model); err != nil {
-			fmt.Println(err)
+		if option.Controller {
+			if err := generateController(option.BaseDir, option.PkgName, option.Version, model); err != nil {
+				fmt.Println(err)
+			}
 		}
-		if err := generateWebIndex(baseDir, pkgName, version, model); err != nil {
-			fmt.Println(err)
+		if option.WebIndex {
+			if err := generateWebIndex(option.BaseDir, option.PkgName, option.Version, model); err != nil {
+				fmt.Println(err)
+			}
 		}
-		if err := generateWebEdit(baseDir, pkgName, version, model); err != nil {
-			fmt.Println(err)
+		if option.WebEdit {
+			if err := generateWebEdit(option.BaseDir, option.PkgName, option.Version, model); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
+}
+
+func Generate(baseDir, pkgName string, version int, models ...GenerateStruct) {
+	GenerateWithOption(Options{
+		BaseDir:    baseDir,
+		PkgName:    pkgName,
+		Version:    version,
+		Repository: true,
+		Service:    true,
+		Controller: true,
+		WebIndex:   true,
+		WebEdit:    true,
+	}, models...)
 }
 
 func GetGenerateStruct(s interface{}) GenerateStruct {
